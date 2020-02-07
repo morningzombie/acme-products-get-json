@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
+
 <body>
     <h1>My React App</h1>
     <div id='root'></div>
@@ -18,30 +19,61 @@
             const { useEffect, useState } = React; //object deconstruction
 
             const [products, setProducts] = useState([]);
+            const [companies, setCompanies] = useState([]);
+
 
             useEffect(() => {
                 axios.get('/api/products')
                     .then(response => setProducts(response.data));
             });
-            //console.log(products)
+
+
+//             useEffect(() => {
+//                 axios.get('/api/companies')
+//                     .then(response => {
+//                     let matches = []
+//                     matches = products.map(productMatch =>{
+//                         return response.data.find(company=>company.id===productMatch.id)
+//                     })
+//                     setCompanies([...matches])
+//                 })
+//             }, [products]);
+
+// console.log(company)
+            useEffect(() => {
+                axios.get('/api/companies')
+                    .then(response => {
+                        // const result = companies.filter(function (company) {
+                        //     return products.some(function (product) {
+                        //         return company.id === product.id; // return the ones with equal id
+                        //     });
+                        // });
+                        let result =[]
+                        result = companies.filter(company => products.some(product => company.id === product.id));
+                
+                        setCompanies([...result])
+                        
+                    })
+            }, [companies])
+           //console.log(companies)
+
             return (
-                <div className="flex-container">
+                <div >
                     <h1>Products</h1>
-                    <div>
-                        <ul>
+                        <div className="flex-container">
                             {
                                 products.map(product => {
                                     return (
-                                        <li key={product.id}>
+                                        <div key={product.id}>
                                             <h2>{product.name}</h2>
-                                            <p>{product.description}</p>
-                                            <h3>{product.suggestedPrice}</h3>
-                                        </li>
+                                            <p>{product.description}<br />
+                                            ${product.suggestedPrice}.00</p>
+                                        </div>
                                     )
-                                })
+                              
+                            })
                             }
-                        </ul>
-                    </div>
+                        </div>
                 </div>
             )
         }
