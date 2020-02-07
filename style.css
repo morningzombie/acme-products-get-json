@@ -1,0 +1,23 @@
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+row {
+  width: auto
+}
+.flex-container > div {
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  background-color: teal;
+  padding: 5px;
+  line-height: 150px;
+  color: white;
+  font-weight: bold;
+  font-size: 1.8rem;
+  text-align: center;
+  margin:10px;
+}

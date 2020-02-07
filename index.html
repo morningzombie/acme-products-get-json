@@ -5,37 +5,43 @@
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js'></script>
-
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
 <body>
     <h1>My React App</h1>
     <div id='root'></div>
     <script type='text/babel'>
-        ReactDOM.render(<hr />, document.querySelector('#root'));
+        ReactDOM.render(<App />, document.querySelector('#root'));
 
-        export default function App() {
+        function App() {
+            const { useEffect, useState } = React; //object deconstruction
+
             const [products, setProducts] = useState([]);
 
             useEffect(() => {
                 axios.get('/api/products')
                     .then(response => setProducts(response.data));
             });
-            console.log(products)
+            //console.log(products)
             return (
-                <div>
+                <div className="flex-container">
                     <h1>Products</h1>
-                    <ul>
-                        {
-                            products.map(product => {
-                                return (
-                                    <li key={product.id}>
-                                        {product.name}
-                                    </li>
-                                )
-                            })
-                        }
-                    </ul>
+                    <div>
+                        <ul>
+                            {
+                                products.map(product => {
+                                    return (
+                                        <li key={product.id}>
+                                            <h2>{product.name}</h2>
+                                            <p>{product.description}</p>
+                                            <h3>{product.suggestedPrice}</h3>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
                 </div>
             )
         }
